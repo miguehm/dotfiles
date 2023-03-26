@@ -124,6 +124,7 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 " Change panes size
 nnoremap <Leader>> 10<C-w>>
 nnoremap <Leader>< 10<C-w><
+nmap <Leader>x <C-w>x
 
 " faster scrolling
 " nnoremap <C-j> 10<C-e>
@@ -222,14 +223,21 @@ endfunction
 nmap <Leader>c :call CpyTxt()<CR>
 
 " Gen uuid code (lenght = 8)
-function GenUuid()
-	"g:test = system('uuidgen | cut -d- -f1')
-	":redir @5 | :cexpr system('uuidgen | cut -d- -f1') | redir END
-	":redir @5 | :cexpr test | redir END
-	":cexpr system('uuidgen | grep -o "^[^-]*" | xclip -sel clip')
-	:cexpr system('uuidgen | grep -o "^[^-]*" | tr -d "\n" | xclip -sel clip')
+" function GenUuid()
+" 	"g:test = system('uuidgen | cut -d- -f1')
+" 	":redir @5 | :cexpr system('uuidgen | cut -d- -f1') | redir END
+" 	":redir @5 | :cexpr test | redir END
+" 	":cexpr system('uuidgen | grep -o "^[^-]*" | xclip -sel clip')
+" 	:cexpr system('uuidgen | grep -o "^[^-]*" | tr -d "\n" | xclip -sel clip')
+" endfunction
+" imap <C-u> <Esc>:call GenUuid()<CR>"+pa
+
+function GenReadable()
+	":cexpr system('/home/miguehm/beauty | cut -d" " -f1,1,2,4 | awk "{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) tolower(substr($i,2))}1" | tr -d " " | tr -d "\n" | xclip -sel clip')
+	:cexpr system('/home/miguehm/beauty | cut -d" " -f1,1,2,4 | tr " " "_" | tr -d "\n" | xclip -sel clip')
 endfunction
-imap <C-u> <Esc>:call GenUuid()<CR>"+pa
+imap <C-u> <Esc>:call GenReadable()<CR>"+pa
+
 "nmap <Leader>u :call GenUuid()<CR>"+p
 
 " Paste linux clipboard
